@@ -1,9 +1,11 @@
 // import Counter from "./Day-1/Counter"
-import StopWatch from "./Day-2/StopWatch"
+import Searcheable from "./Day-3/Searcheable"
+// import PropsPlay from "./Day-3/PropsPlay";
 
 
 function App() {
-  return <StopWatch />
+  return <Searcheable/>
+  // return <PropsPlay/>;
 }
 
 export default App
