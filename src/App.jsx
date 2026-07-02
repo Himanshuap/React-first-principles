@@ -1,17 +1,52 @@
-// import Counter from "./Day-1/Counter"
-// import Searcheable from "./Day-3/Searcheable"
-// import UserList from './Day-4/UserList';
-// import PropsPlay from "./Day-3/PropsPlay";
- import Counter from "./Day-5/Counter"
+import { BrowserRouter, Routes, Route, Link, Navigate } from 'react-router-dom';
 
-
-function App() {
-  // return <Searcheable/>
-  // return <PropsPlay/>;
-    // return <UserList />;
-    // return <ThemeApp/>;
-    return <Counter/>
-
+function Home() {
+  return <h1>Home Page (anyone can see)</h1>;
 }
 
-export default App
+function Dashboard() {
+  return <h1>Dashboard (logged-in only)</h1>;
+}
+
+function Login() {
+  return <h1>Login Page</h1>;
+}
+
+// the gatekeeper
+function ProtectedRoute({ children, isLoggedIn }) {
+  if (!isLoggedIn) {
+    return <Navigate to="/login" />;
+  }
+  return children;
+}
+
+function App() {
+  const isLoggedIn = true;   // flip to true to test the other case
+
+  return (
+    <BrowserRouter>
+      <nav>
+        <Link to="/">Home</Link>
+        {' | '}
+        <Link to="/dashboard">Dashboard</Link>
+        {' | '}
+        <Link to="/login">Login</Link>
+      </nav>
+
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route
+          path="/dashboard"
+          element={
+            <ProtectedRoute isLoggedIn={isLoggedIn}>
+              <Dashboard />
+            </ProtectedRoute>
+          }
+        />
+      </Routes>
+    </BrowserRouter>
+  );
+}
+
+export default App;
